@@ -50,14 +50,14 @@ function getTextIp() {
 // Username
 function getTextUsername() {
     let data_p = $x('//div[@id="UI:PropertiesTab"]/div/div[1]');
-    let apellido = data_p[0].children[0].children[1].children[1].innerText;
-    let nombre = data_p[0].children[0].children[2].children[1].innerText;
+    let apellido = data_p[0].children[0].children[1].children[1]?.innerText;
+    let nombre = data_p[0].children[0].children[2].children[1]?.innerText;
     let username = nombre + " " + apellido;
     let dni = data_p[0].children[0].children[8].children[1]?.innerText;
     let txt_final = "";
     let data_pp = $x('//div[@id="UI:PropertiesTab"]/div/div[2]');
     data_pp.forEach((element) => {
-        let email = element.children[1].children[1].children[1].children[0].innerText;
+        let email = element.children[1].children[1].children[1].children[0]?.innerText;
         let telefono = element.children[1].children[3].children[1].children[0]?.innerText;
         let movil = element.children[1].children[4].children[1].children[0]?.innerText;
         txt_final += "\n" + username + "\nNúmero de Empleado: " + dni + "\nCorreo Electrónico: " + email + "\nTeléfono: " + telefono + "\nMóvil: " + movil + "\n";
