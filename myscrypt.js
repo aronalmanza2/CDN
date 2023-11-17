@@ -51,8 +51,8 @@ function getTextIp() {
 const data_p = $x('//div[@id="UI:PropertiesTab"]/div/div[1]');
 const data_pp = $x('//div[@id="UI:PropertiesTab"]/div/div[2]');
 function getTextUsername() {
-    let apellido = data_p[0].children[0].children[1].children[1].innerText;
-    let nombre = data_p[0].children[0].children[2].children[1].innerText;
+    let apellido = data_p[0].children[0].children[1].children[1]?.innerText;
+    let nombre = data_p[0].children[0].children[2].children[1]?.innerText;
     let username = nombre + " " + apellido;
     let dni = data_p[0].children[0].children[8].children[1]?.innerText;
     let txt_final = "";
