@@ -1,15 +1,15 @@
 //Ticket
-const datax = $x("//tbody/tr");
 function getTextTicket() {
+    let datax = $x("//tbody/tr");
     let txt_final = "";
     datax.forEach((element) => {
         let req = element.children[0].innerText;
         let asunto = element.children[1].innerText;
         let reportado = element.children[2].innerText;
         let fecha = element.children[3].innerText;
-        let detalles = element.children[6].innerText.replaceAll(" ", " ").replaceAll("	", " ");
+        let detalles = element.children[6].innerText.replaceAll(" ", " ").replaceAll("	", " ");
         detalles = detalles.replaceAll("\n\n \n\n", "\n").replaceAll("\n\n ", "").replaceAll("Necesario \n", "").replaceAll(": \n", " ");
-        let descripcion = element.children[7].innerText.replaceAll(" ", " ").replaceAll("	", " ");
+        let descripcion = element.children[7].innerText.replaceAll(" ", " ").replaceAll("	", " ");
         descripcion = descripcion.replaceAll("\n\n \n\n", "\n").replaceAll("\n\n ", "");
         let motivo_pendiente = element.children[8].innerText;
         let idperson = element.children[2].dataset.valueRaw;
@@ -25,8 +25,8 @@ function getTextTicket() {
 }
 
 //Ip Report
-const data_v = $x('//table/tbody[@class="yui-dt-data"]/tr');
 function getTextIp() {
+    let data_v = $x('//table/tbody[@class="yui-dt-data"]/tr');
     let txt_final = "";
     data_v.forEach((element) => {
         let sn = element.children[0].innerText;
@@ -48,14 +48,14 @@ function getTextIp() {
 }
 
 // Username
-const data_p = $x('//div[@id="UI:PropertiesTab"]/div/div[1]');
-const data_pp = $x('//div[@id="UI:PropertiesTab"]/div/div[2]');
 function getTextUsername() {
-    let apellido = data_p[0].children[0].children[1].children[1]?.innerText;
-    let nombre = data_p[0].children[0].children[2].children[1]?.innerText;
+    let data_p = $x('//div[@id="UI:PropertiesTab"]/div/div[1]');
+    let apellido = data_p[0].children[0].children[1].children[1].innerText;
+    let nombre = data_p[0].children[0].children[2].children[1].innerText;
     let username = nombre + " " + apellido;
     let dni = data_p[0].children[0].children[8].children[1]?.innerText;
     let txt_final = "";
+    let data_pp = $x('//div[@id="UI:PropertiesTab"]/div/div[2]');
     data_pp.forEach((element) => {
         let email = element.children[1].children[1].children[1].children[0].innerText;
         let telefono = element.children[1].children[3].children[1].children[0]?.innerText;
