@@ -1,6 +1,6 @@
 //Ticket
 function getTextTicket() {
-    let datax = $x("//tbody/tr");
+    let datax = $x("//tbody/tr[contains(@class,'odd') or contains(@class,'even')]");
     let txt_final = "";
     datax.forEach((element) => {
         let req = element.children[0].innerText;
