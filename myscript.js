@@ -1,3 +1,29 @@
+//One Ticket
+function getTextOneTicket() {
+    let datax = $x("//div[@id='ibo-center-container']");
+    let id_tick = datax[0].children[0].children[1].attributes["data-object-id"].value;
+    let nro_tick = datax[0].children[0].children[1].children[1].children[0].children[1].children[0].innerText;
+    let url_tick_ = datax[0].attributes["id"].baseURI;
+    let url_tick = "https://mesadeservicioti.mef.gob.pe/web/pages/UI.php?operation=details&class=Incident&id=" + id_tick;
+    let reportado = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[2].children[1].children[0].children[0].innerText;
+    let id_persona = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[2].children[1].children[0].attributes["title"].value.substring(9);
+    let url_persona_ = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[2].children[1].children[0].children[0].href;
+    let url_persona = "https://mesadeservicioti.mef.gob.pe/web/pages/UI.php?operation=details&class=Person&id=" + id_persona;
+    let asunto = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[5].children[1].innerText.replaceAll(" \n\n", "\n").replaceAll("\n\n", "\n");
+    let descripcion = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[6].children[1].innerText.replaceAll(" \n\n", "\n").replaceAll("\n\n", "\n");
+    let mas_info = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[1].innerText.replaceAll("\t\n", " : ");
+    let fecha_ini = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[1].children[2].children[1].children[1].innerText;
+    let fecha_asig = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[1].children[2].children[3].children[1].innerText;
+    let txt_final = "====================================================================================================" + "\n" + "== " + fecha_ini + " --- " + fecha_asig + "\n" + "======================================================================" + "\n" + "------------------------------" + nro_tick + "\n" + "\n" + "> baseURI:" + "\n" + url_tick + "\n" + "\n" + "> Asunto:" + "\n" + asunto + "\n" + "\n" + "> Detalles del Servicio:" + "\n" + mas_info + "\n" + "\n" + "> Descripcion:" + "\n" + descripcion + "\n" + "\n" + "--------------------" + "\n" + "\n" + url_persona + "\n" + "\n" + "adb shell am start -a android.intent.action.CALL -d tel:" + "\n" + "\n" + "https://api.whatsapp.com/send?phone=51" + "\n" + "Buen día estimad@ " + reportado + " , Le saluda Aron de SOPORTE OGTI - MEF, Nos intentamos comunicar por el caso que tiene generado [" + nro_tick + "], para proceder con la atención solicitada." + "\n" + "\n" + "-------------------------------------------------------------------WHATSAPP" + "\n" + nro_tick + " | " + reportado + " | xxx - xxx - xxx" + "\n" + "-------------------------------------------------------------------END" + "\n" + "---" + "\n" + "\n";
+    var txtTemp = document.createElement("textarea");
+    document.body.appendChild(txtTemp);
+    txtTemp.value = txt_final;
+    txtTemp.select();
+    document.execCommand("copy");
+    document.body.removeChild(txtTemp); //console.log(txt_final);
+}
+
+
 //Ticket
 function getTextTicket() {
     let datax = $x("//tbody/tr[contains(@class,'odd') or contains(@class,'even')]");
