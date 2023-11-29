@@ -4,7 +4,8 @@ function getTextOneTicket() {
     let id_tick = datax[0].children[0].children[1].attributes["data-object-id"].value;
     let nro_tick = datax[0].children[0].children[1].children[1].children[0].children[1].children[0].innerText;
     let url_tick_ = datax[0].attributes["id"].baseURI;
-    let url_tick = "https://mesadeservicioti.mef.gob.pe/web/pages/UI.php?operation=details&class=Incident&id=" + id_tick;
+    let inc_req = nro_tick.substring(0, 1) == "R" ? "UserRequest" : "Incident";
+    let url_tick = "https://mesadeservicioti.mef.gob.pe/web/pages/UI.php?operation=details&class=" + inc_req + "&id=" + id_tick;
     let reportado = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[2].children[1].children[0].children[0].innerText;
     let id_persona = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[2].children[1].children[0].attributes["title"].value.substring(9);
     let url_persona_ = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[2].children[1].children[0].children[0].href;
