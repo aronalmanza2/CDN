@@ -30,7 +30,10 @@ function getTextTicket() {
     let datax = $x("//tbody/tr[contains(@class,'odd') or contains(@class,'even')]");
     let txt_final = "";
     datax.forEach((element) => {
-        let req = element.children[0].innerText;
+        let nro_tick = element.children[0].innerText;
+        let id_tick = element.children[0].attributes["data-value-raw"].value;
+        let inc_req = nro_tick.substring(0, 1) == "R" ? "UserRequest" : "Incident";
+        let url_tick = "https://mesadeservicioti.mef.gob.pe/web/pages/UI.php?operation=details&class=" + inc_req + "&id=" + id_tick;
         let asunto = element.children[1].innerText;
         let reportado = element.children[2].innerText;
         let fecha = element.children[3].innerText;
@@ -41,7 +44,7 @@ function getTextTicket() {
         let motivo_pendiente = element.children[8].innerText;
         let idperson = element.children[2].dataset.valueRaw;
         let url_person = "https://mesadeservicioti.mef.gob.pe/web/pages/UI.php?operation=details&class=Person&id=" + idperson;
-        txt_final += "====================================================================================================" + "\n" + "== xxxxxxxx_fecha_hoy" + " --- " + fecha + "\n" + "======================================================================" + "\n" + "------------------------------" + req + "\n" + "\n" + "> Asunto:" + "\n" + asunto + "\n" + "\n" + "> Detalles del Servicio:" + "\n" + detalles + "\n" + "\n" + "> Descripcion:" + "\n" + descripcion + "\n" + "\n" + "--------------------" + "\n" + "\n" + url_person + "\n" + "\n" + "adb shell am start -a android.intent.action.CALL -d tel:" + "\n" + "\n" + "https://api.whatsapp.com/send?phone=51" + "\n" + "Buen día estimad@ " + reportado + " , Le saluda Aron de SOPORTE OGTI - MEF, Nos estamos comunicando por este medio por el caso que tiene generado [" + req + "], para proceder con la atención solicitada." + "\n" + "\n" + "Motivo Pendiente:" + "\n" + motivo_pendiente + "\n" + "\n" + "-------------------------------------------------------------------WHATSAPP" + "\n" + req + " | " + reportado + " | xxx - xxx - xxx" + "\n" + "-------------------------------------------------------------------END" + "\n" + "---" + "\n" + "\n";
+        txt_final += "====================================================================================================" + "\n" + "== xxxxxxxx_fecha_hoy" + " --- " + fecha + "\n" + "======================================================================" + "\n" + "------------------------------" + nro_tick + "\n" + "\n" + "> baseURI:" + "\n" + url_tick + "\n" + "\n" + "> Asunto:" + "\n" + asunto + "\n" + "\n" + "> Detalles del Servicio:" + "\n" + detalles + "\n" + "\n" + "> Descripcion:" + "\n" + descripcion + "\n" + "\n" + "--------------------" + "\n" + "\n" + url_person + "\n" + "\n" + "adb shell am start -a android.intent.action.CALL -d tel:" + "\n" + "\n" + "https://api.whatsapp.com/send?phone=51" + "\n" + "Buen día estimad@ " + reportado + " , Le saluda Aron de SOPORTE OGTI - MEF, Nos estamos comunicando por este medio por el caso que tiene generado [" + nro_tick + "], para proceder con la atención solicitada." + "\n" + "\n" + "Motivo Pendiente:" + "\n" + motivo_pendiente + "\n" + "\n" + "-------------------------------------------------------------------WHATSAPP" + "\n" + nro_tick + " | " + reportado + " | xxx - xxx - xxx" + "\n" + "-------------------------------------------------------------------END" + "\n" + "---" + "\n" + "\n";
     });
     var txtTemp = document.createElement("textarea");
     document.body.appendChild(txtTemp);
