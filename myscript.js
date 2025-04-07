@@ -10,8 +10,8 @@ function getTextOneTicket() {
     let id_persona = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[2].children[1].children[0].attributes["title"].value.substring(9);
     let url_persona_ = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[2].children[1].children[0].children[0].href;
     let url_persona = "https://mesadeservicioti.mef.gob.pe/web/pages/UI.php?operation=details&class=Person&id=" + id_persona;
-    let asunto = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[5].children[1].innerText.replaceAll(" \n\n", "\n").replaceAll("\n\n", "\n");
-    let descripcion = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[6].children[1].innerText.replaceAll(" \n\n", "\n").replaceAll("\n\n", "\n");
+    let asunto = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[6].children[1].innerText.replaceAll(" \n\n", "\n").replaceAll("\n\n", "\n");
+    let descripcion = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[0].children[7].children[1].innerText.replaceAll(" \n\n", "\n").replaceAll("\n\n", "\n");
     let mas_info = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[0].children[1].innerText.replaceAll("\t\n", " : ");
     let fecha_ini = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[1].children[2].children[1].children[1].innerText;
     let fecha_asig = datax[0].children[0].children[1].children[2].children[0].children[1].children[0].children[1].children[0].children[1].children[2].children[3].children[1].innerText;
@@ -83,7 +83,7 @@ function getTextUsername() {
     let apellido = data_p[0].children[0].children[1].children[1]?.innerText;
     let nombre = data_p[0].children[0].children[2].children[1]?.innerText;
     let username = nombre + " " + apellido;
-    let dni = data_p[0].children[0].children[8].children[1]?.innerText;
+    let dni = data_p[0].children[0].children[9].children[1]?.innerText;
     let txt_final = "";
     let data_pp = $x('//div[@id="UI:PropertiesTab"]/div/div[2]');
     data_pp.forEach((element) => {
