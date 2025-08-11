@@ -1,3 +1,164 @@
+// === Función mejorada: getTextOneTicketMod ===
+function getTextOneTicketMod() {
+  // Buscar el contenedor principal
+  const datax = $x("//div[@id='ibo-center-container']")[0];
+  if (!datax) {
+    console.error("No se encontró el contenedor #ibo-center-container");
+    return;
+  }
+
+  // === Funciones auxiliares ===
+
+  // Limpia y normaliza saltos de línea
+  const cleanLineBreaks = (text) => {
+    return text
+      .replace(/\r\n|\r/g, '\n')           // Normalizar saltos
+      .replace(/[ \t]+$/gm, '')            // Espacios al final
+      .replace(/^\s*\n/gm, '\n')           // Líneas vacías con espacios
+      .replace(/\n{3,}/g, '\n\n')          // Máximo 2 saltos seguidos
+      .trim();
+  };
+
+  // Extrae texto respetando saltos visuales (mejor que textContent)
+  const getInnerText = (xpath) => {
+    const el = $x(xpath, datax)[0];
+    const text = el?.innerText || 'No disponible';
+    return cleanLineBreaks(text);
+  };
+
+  // Extrae atributo seguro
+  const getAttr = (xpath, attr) => {
+    const el = $x(xpath, datax)[0];
+    return el ? el.getAttribute(attr)?.trim() : 'No disponible';
+  };
+  
+
+  // Función auxiliar para extraer texto limpio
+  const getText = (xpath) => {
+    const el = $x(xpath, datax)[0];
+    return el ? el.textContent.trim().replace(/\s+/g, ' ') : 'No disponible';
+  };
+
+  // Función auxiliar parra extraer campos personalizados
+  const getCustomFields = (xpath, context = datax) => {
+    const container = $x(xpath, context)[0];
+    if (!container) return 'No disponible';
+
+    const fields = container.querySelectorAll('.ibo-field');
+    const details = [];
+
+    fields.forEach(field => {
+      const labelEl = field.querySelector('.ibo-field--label');
+      const valueEl = field.querySelector('.ibo-field--value');
+
+      if (labelEl && valueEl) {
+        const label = labelEl.textContent.trim().replace(/:+\s*$/, '');
+        const value = valueEl.textContent.trim();
+        if (label) {
+          details.push(`${label}: ${value}`);
+        }
+      }
+    });
+
+    return details.length > 0 ? details.join('\n') : 'No hay detalles adicionales';
+  };
+
+  // === Extracción de datos ===
+  const id_tick = getAttr(".//div[contains(@id, 'ibo-object-details')]", "data-object-id");
+  const nro_tick = getText(".//div[@class='ibo-panel--title']");
+  const url_tick_2 = datax.baseURI;
+
+  const inc_req = nro_tick.startsWith("R") ? "UserRequest" : "Incident";
+  const url_tick = `https://mesadeservicioti.mef.gob.pe/web/pages/UI.php?operation=details&class=${inc_req}&id=${id_tick}`;
+
+  const mef = getText(".//div[@data-attribute-code='org_id']//a[contains(@class, 'object-ref-link')]");
+  const reportado = getText(".//div[@data-attribute-code='caller_id']//a[contains(@class, 'object-ref-link')]");
+
+  const id_persona = getAttr(".//div[@data-attribute-code='caller_id']", "data-value-raw");
+  const url_persona_2 = $x(
+    ".//div[@data-attribute-code='caller_id']//a[contains(@class, 'object-ref-link')]",
+    datax
+  )[0]?.href?.trim() || 'No disponible';
+
+  const url_persona = `https://mesadeservicioti.mef.gob.pe/web/pages/UI.php?operation=details&class=Person&id=${id_persona}`;
+
+  const asunto = getInnerText(".//div[@data-attribute-code='title']//div[@class='ibo-field--value']");
+  const descripcion = getInnerText(".//div[@data-attribute-code='description']//div[@class='ibo-field--value']");
+  const servicio = getText(".//div[@data-attribute-code='service_id']//a[contains(@class, 'object-ref-link')]");
+  const subservicio = getText(".//div[@data-attribute-code='servicesubcategory_id']//a[contains(@class, 'object-ref-link')]");
+  
+  const mas_info = getCustomFields(".//div[@data-attribute-code='service_details']//div[@class='ibo-field--value']");
+
+  const fecha_ini = getText(".//div[@data-attribute-code='start_date']//div[@class='ibo-field--value']");
+  const fecha_asig = getText(".//div[@data-attribute-code='assignment_date']//div[@class='ibo-field--value']");
+
+
+  // === Formato del mensaje final ===
+  const txt_final = `
+====================================================================================================
+== ${fecha_ini} --- ${fecha_asig}
+====================================================================================================
+
+------------------------------ ${nro_tick}
+> URL del Ticket (real):
+${url_tick_2}
+
+> URL del Ticket (construido):
+${url_tick}
+
+> Servicio: ${servicio}
+> Subservicio: ${subservicio}
+
+> Asunto:
+${asunto}
+
+> Descripción:
+${descripcion}
+
+> Detalles del Servicio:
+${mas_info}
+
+--------------------------------------------------------------------------------
+> Reportado por: ${reportado}
+> Organización: ${mef}
+> ID Persona: ${id_persona}
+
+> Perfil de la Persona (real):
+${url_persona_2}
+
+> Perfil de la Persona (construido):
+${url_persona}
+
+> Llamar:
+adb shell am start -a android.intent.action.CALL -d tel:
+
+> WhatsApp:
+https://api.whatsapp.com/send?phone=51
+Buen día estimad@ ${reportado}, le saluda Aron de SOPORTE OGTI - MEF. Nos comunicamos por el caso [${nro_tick}] para proceder con la atención solicitada.
+
+> Anotaciones:::
+
+
+
+-------------------------------------------------------------------WHATSAPP
+${nro_tick} | ${reportado} | xxx - xxx - xxx
+-------------------------------------------------------------------END
+
+---
+
+`;
+
+  // === Copiar al portapapeles ===
+  const txtTemp = document.createElement("textarea");
+  txtTemp.value = txt_final;
+  document.body.appendChild(txtTemp);
+  txtTemp.select();
+  document.execCommand("copy");
+  document.body.removeChild(txtTemp);
+
+  console.log(">>> Texto copiado al portapapeles:", nro_tick);
+}
+
 //One Ticket
 function getTextOneTicket() {
     let datax = $x("//div[@id='ibo-center-container']");
