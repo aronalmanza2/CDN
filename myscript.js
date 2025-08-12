@@ -13,6 +13,7 @@ function getTextOneTicketMod() {
   const cleanLineBreaks = (text) => {
     return text
       .replace(/\r\n|\r/g, '\n')           // Normalizar saltos
+      .replace(/\u00A0/g, ' ')             // Reemplazar NBSP (0xA0) por espacio normal
       .replace(/[ \t]+$/gm, '')            // Espacios al final
       .replace(/^\s*\n/gm, '')           // Líneas vacías con espacios
       .replace(/\n{3,}/g, '\n\n')          // Máximo 2 saltos seguidos
