@@ -129,7 +129,11 @@ adb shell am start -a android.intent.action.CALL -d tel:
 
 > WhatsApp:
 https://api.whatsapp.com/send?phone=51
-Buen día estimad@ ${reportado}, le saluda Aron de SOPORTE OGTI - MEF. Nos comunicamos por el caso [${nro_tick}] para proceder con la atención solicitada.
+Buen día, estimad@ ${reportado},
+Le saluda Aron del equipo de Soporte OGTI - MEF.
+Nos ponemos en contacto respecto al caso [${nro_tick}], para coordinar y dar inicio a la atención de su solicitud.
+Quedo atento a su respuesta para brindarle el soporte necesario.
+Saludos cordiales.
 
 > Anotaciones:::
 
