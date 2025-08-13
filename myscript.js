@@ -104,9 +104,6 @@ function getTextOneTicketMod() {
 > URL del Ticket (real):
 ${url_tick_2}
 
-> URL del Ticket (construido):
-${url_tick}
-
 > Servicio: ${servicio}
 > Subservicio: ${subservicio}
 
@@ -126,9 +123,6 @@ ${mas_info}
 
 > Perfil de la Persona (real):
 ${url_persona_2}
-
-> Perfil de la Persona (construido):
-${url_persona}
 
 > Llamar:
 adb shell am start -a android.intent.action.CALL -d tel:
